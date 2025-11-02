@@ -1,6 +1,6 @@
 {
   "name": "educent-pro",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -8,35 +8,25 @@
     "start": "next start",
     "lint": "next lint",
     "type-check": "tsc --noEmit",
-    "prebuild": "bun run type-check",
-    "postbuild": "node scripts/inject-console-capture.js"
+    "prebuild": "bun run type-check"
   },
   "dependencies": {
-    "next": "16.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
     "@cosmicjs/sdk": "^1.5.6",
+    "@types/node": "20.11.24",
+    "@types/react": "18.2.61",
+    "@types/react-dom": "18.2.19",
     "framer-motion": "^11.0.0",
-    "react-hook-form": "^7.48.0",
-    "socket.io-client": "^4.7.0",
-    "date-fns": "^3.0.0",
-    "clsx": "^2.1.0",
+    "next": "14.1.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "react-hot-toast": "^2.4.1",
-    "bcryptjs": "^2.4.3",
-    "jsonwebtoken": "^9.0.2"
+    "typescript": "5.3.3"
   },
   "devDependencies": {
-    "@types/node": "^20.0.0",
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@types/bcryptjs": "^2.4.6",
-    "@types/jsonwebtoken": "^9.0.5",
-    "typescript": "^5.3.0",
-    "eslint": "^9.0.0",
-    "eslint-config-next": "16.0.0",
-    "tailwindcss": "^3.4.0",
-    "autoprefixer": "^10.4.0",
-    "postcss": "^8.4.0",
-    "glob": "^10.3.10"
+    "autoprefixer": "^10.4.17",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.1.0",
+    "postcss": "^8.4.35",
+    "tailwindcss": "^3.4.1"
   }
 }
