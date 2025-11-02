@@ -5,9 +5,10 @@ import type { Reward } from '@/types'
 
 interface RewardTrackerProps {
   rewards: Reward[]
+  attendanceStreak?: number // Added optional attendanceStreak prop
 }
 
-export default function RewardTracker({ rewards }: RewardTrackerProps) {
+export default function RewardTracker({ rewards, attendanceStreak }: RewardTrackerProps) {
   const latestReward = rewards[0]
   
   const steps = [
@@ -30,7 +31,14 @@ export default function RewardTracker({ rewards }: RewardTrackerProps) {
 
   return (
     <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-lg font-semibold mb-4">Reward Status Tracker</h2>
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold">Reward Status Tracker</h2>
+        {attendanceStreak !== undefined && (
+          <span className="text-sm text-gray-600">
+            🔥 {attendanceStreak} day streak
+          </span>
+        )}
+      </div>
       {latestReward ? (
         <div>
           <p className="text-sm text-gray-600 mb-4">{latestReward.title}</p>

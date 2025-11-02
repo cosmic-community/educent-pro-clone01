@@ -1,59 +1,59 @@
 import { NextResponse } from 'next/server'
 
 export async function POST(request: Request) {
-    try {
-        const { subject, question } = await request.json()
-        
-        // Check if OpenAI API key is available
-        if (process.env.OPENAI_API_KEY) {
-            // Use OpenAI API for real AI responses
-            const response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
-                },
-                body: JSON.stringify({
-                    model: 'gpt-3.5-turbo',
-                    messages: [
-                        {
-                            role: 'system',
-                            content: `You are an expert ${subject} teacher. Explain concepts clearly and provide step-by-step solutions. Be encouraging and patient like a real teacher.`
-                        },
-                        {
-                            role: 'user',
-                            content: question
-                        }
-                    ],
-                    temperature: 0.7,
-                    max_tokens: 500
-                })
-            })
-            
-            if (response.ok) {
-                const data = await response.json()
-                return NextResponse.json({ 
-                    response: data.choices[0].message.content 
-                })
+  try {
+    const { subject, question } = await request.json()
+    
+    // Check if OpenAI API key is available
+    if (process.env.OPENAI_API_KEY) {
+      // Use OpenAI API for real AI responses
+      const response = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            {
+              role: 'system',
+              content: `You are an expert ${subject} teacher. Explain concepts clearly and provide step-by-step solutions. Be encouraging and patient like a real teacher.`
+            },
+            {
+              role: 'user',
+              content: question
             }
-        }
-        
-        // Fallback to enhanced educational responses
-        const response = generateEducationalResponse(subject, question)
-        return NextResponse.json({ response })
-    } catch (error) {
-        console.error('AI Study Buddy error:', error)
-        return NextResponse.json(
-            { error: 'Failed to generate response' },
-            { status: 500 }
-        )
+          ],
+          temperature: 0.7,
+          max_tokens: 500
+        })
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        return NextResponse.json({ 
+          response: data.choices[0].message.content 
+        })
+      }
     }
+    
+    // Fallback to enhanced educational responses
+    const response = generateEducationalResponse(subject, question)
+    return NextResponse.json({ response })
+  } catch (error) {
+    console.error('AI Study Buddy error:', error)
+    return NextResponse.json(
+      { error: 'Failed to generate response' },
+      { status: 500 }
+    )
+  }
 }
 
 function generateEducationalResponse(subject: string, question: string): string {
-    // Enhanced educational responses with more detail
-    const responses: Record<string, string> = {
-        Mathematics: `Excellent question about ${question}!
+  // Enhanced educational responses with more detail
+  const responses: Record<string, string> = {
+    Mathematics: `Excellent question about ${question}!
 
 📐 **Understanding the Problem**:
 Let me break this down step by step for you.
@@ -81,8 +81,8 @@ Let me break this down step by step for you.
 💡 **Practice Tip**: Try solving 3 similar problems to master this concept!
 
 Would you like me to work through a specific example?`,
-        
-        Science: `Great scientific inquiry about ${question}!
+    
+    Science: `Great scientific inquiry about ${question}!
 
 🔬 **Scientific Explanation**:
 
@@ -111,8 +111,8 @@ Would you like me to work through a specific example?`,
 🔍 **Critical Thinking**: What variables might change the outcome?
 
 Need clarification on any part?`,
-        
-        English: `Wonderful question about ${question}!
+    
+    English: `Wonderful question about ${question}!
 
 📚 **Language & Literature Guidance**:
 
@@ -143,8 +143,8 @@ Need clarification on any part?`,
 ✍️ **Remember**: Good writing is rewriting!
 
 Would you like more examples?`,
-        
-        default: `Excellent question! Let me help you understand ${question} in ${subject}.
+    
+    default: `Excellent question! Let me help you understand ${question} in ${subject}.
 
 🎓 **Comprehensive Explanation**:
 
@@ -178,7 +178,8 @@ Would you like more examples?`,
 🌟 **Next Steps**: Master this, then move to [related topic]
 
 Any specific part you'd like me to elaborate on?`
-    }
-    
-    return responses[subject] || responses.default
+  }
+  
+  // Fixed: Add null check before accessing responses[subject]
+  return responses[subject] ?? responses.default
 }
