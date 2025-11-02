@@ -62,7 +62,7 @@ export default function QueryManagement({ queries }: QueryManagementProps) {
                   <div className="mt-3 p-3 bg-gray-50 rounded">
                     <p className="text-xs text-gray-600 mb-1">Latest Reply:</p>
                     <p className="text-sm text-gray-700">
-                      {query.metadata.replies[query.metadata.replies.length - 1].message}
+                      {query.metadata.replies[query.metadata.replies.length - 1]?.message}
                     </p>
                   </div>
                 )}

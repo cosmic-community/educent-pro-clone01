@@ -155,8 +155,3 @@ export interface Notification extends CosmicObject {
 }
 
 export type NotificationType = 'info' | 'success' | 'warning' | 'error' | 'reward' | 'query';
-
-// Helper function for safe Cosmic SDK errors
-export function hasStatus(error: unknown): error is { status: number } {
-  return typeof error === 'object' && error !== null && 'status' in error;
-}

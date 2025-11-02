@@ -1,11 +1,16 @@
 import { createBucketClient } from '@cosmicjs/sdk';
-import type { User, Class, Reward, SyllabusItem, Query, Notification, hasStatus } from '@/types';
+import type { User, Class, Reward, SyllabusItem, Query, Notification } from '@/types';
 
 export const cosmic = createBucketClient({
   bucketSlug: process.env.COSMIC_BUCKET_SLUG as string,
   readKey: process.env.COSMIC_READ_KEY as string,
   writeKey: process.env.COSMIC_WRITE_KEY as string,
 });
+
+// Helper function for safe error handling
+function hasStatus(error: unknown): error is { status: number } {
+  return typeof error === 'object' && error !== null && 'status' in error;
+}
 
 // User functions
 export async function getUsers(): Promise<User[]> {
@@ -152,9 +157,4 @@ export async function getNotifications(): Promise<Notification[]> {
     }
     throw new Error('Failed to fetch notifications');
   }
-}
-
-// Helper function for safe error handling
-function hasStatus(error: unknown): error is { status: number } {
-  return typeof error === 'object' && error !== null && 'status' in error;
 }
