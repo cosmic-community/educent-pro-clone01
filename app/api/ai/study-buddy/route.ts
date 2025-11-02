@@ -180,6 +180,6 @@ Would you like more examples?`,
 Any specific part you'd like me to elaborate on?`
   }
   
-  // Fixed: Add null check before accessing responses[subject]
+  // Fixed: Using nullish coalescing operator to provide default value
   return responses[subject] ?? responses.default
 }

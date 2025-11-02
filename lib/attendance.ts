@@ -71,7 +71,13 @@ export function validateQRCode(code: string | undefined): boolean {
   const parts = code.split('-');
   if (parts.length !== 3) return false;
   
-  const timestamp = parseInt(parts[1]);
+  // Fixed: Add proper null check for parts[1]
+  const timestampStr = parts[1];
+  if (!timestampStr) return false;
+  
+  const timestamp = parseInt(timestampStr);
+  if (isNaN(timestamp)) return false;
+  
   const now = Date.now();
   
   // QR code is valid for 5 minutes (300000 ms)
